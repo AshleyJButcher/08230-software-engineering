@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayFormat", "ArrayFormat\ArrayFormat.csproj", "{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DFFD4239-AD89-42C8-B874-0B5CF109D066}"
+	ProjectSection(SolutionItems) = preProject
+		ArrayFormat.vsmdi = ArrayFormat.vsmdi
+		Local.testsettings = Local.testsettings
+		ArrayFormat\bin\Debug\test.txt = ArrayFormat\bin\Debug\test.txt
+		ArrayFormat\bin\Debug\test.txt.out = ArrayFormat\bin\Debug\test.txt.out
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = ArrayFormat.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Debug|x86.ActiveCfg = Debug|x86
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Debug|x86.Build.0 = Debug|x86
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Release|Any CPU.ActiveCfg = Release|x86
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Release|x86.ActiveCfg = Release|x86
+		{CA7F6FD5-4632-48E3-A04F-C26DDD772E5A}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
+	EndGlobalSection
+EndGlobal
