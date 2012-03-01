@@ -156,7 +156,6 @@ namespace ArrayFormat
                 }
                 if (AlltheSame == true)
                 {
-                    Console.WriteLine(maxcolumns + " is Possible");
                     MaxPossibleColumn = maxcolumns;
                 }
             }
@@ -166,41 +165,34 @@ namespace ArrayFormat
 
         public void Column(string[] inputstrings, int wrapcolumn, Page page, bool strict)
         {
-            Page temppage = new Text(wrapcolumn);
-            int Totalcolumns = UniformCount(inputstrings, wrapcolumn, temppage, strict);
+            int Totalcolumns = UniformCount(inputstrings, wrapcolumn, page, strict);
             if (Totalcolumns != 1)
             {
                 //Efficency at its finest LOL
                 for (int Column = 0; Column < Totalcolumns; Column++)
                 {
                     int longestline = 0;
-                    for (int i = 0; i < temppage.Lines.Count; i++) //Find the Longest String
+                    for (int i = 0; i < page.Lines.Count; i++) //Find the Longest String
                     {
-                        if (temppage.Lines[i].Count() > Column) //Wont Break If Its the Last Column
-                            if (longestline < temppage.Lines[i].At(Column).Length) //If Current Line is Longer than Previous
-                                longestline = temppage.Lines[i].At(Column).Length; //Set as New Longest Line
+                        if (page.Lines[i].Count() > Column) //Wont Break If Its the Last Column
+                            if (longestline < page.Lines[i].At(Column).Length) //If Current Line is Longer than Previous
+                                longestline = page.Lines[i].At(Column).Length; //Set as New Longest Line
                     }
 
-                    for (int i = 0; i < temppage.Lines.Count; i++) //Go Through Each String Adding More Spaces
+                    for (int i = 0; i < page.Lines.Count; i++) //Go Through Each String Adding More Spaces
                     {
-                        if (temppage.Lines[i].Count() > Column)
+                        if (page.Lines[i].Count() > Column)
                         {
-                            int num = temppage.Lines[i].At(Column).Length; //Get Length of the String
+                            int num = page.Lines[i].At(Column).Length; //Get Length of the String
                             for (int h = num; h < longestline; h++) //Repeat for the amount of spaces to add
                             {
-                                if (temppage.Lines[i].Count() > Column)
-                                    temppage.Lines[i].At(Column, " "); //Add a Space
+                                if (page.Lines[i].Count() > Column)
+                                    page.Lines[i].At(Column, " "); //Add a Space
                             }
                         }
                     }
                 }
             }
-
-                for (int i = 0; i < 4; i++)
-                {
-                    Console.WriteLine(temppage.Lines[i].ToString());
-                }
-                Console.ReadLine();
             }
 
         public void Set(string[] inputstrings, int wrapcolumn, Page page)
@@ -230,7 +222,7 @@ namespace ArrayFormat
                             used[i] = true;
                             OrganisedStrings[counter] = inputstrings[i];
                             counter++;
-                            Console.WriteLine(inputstrings[i]);
+                            //Console.WriteLine(inputstrings[i]);
                         }
                     }
                 }

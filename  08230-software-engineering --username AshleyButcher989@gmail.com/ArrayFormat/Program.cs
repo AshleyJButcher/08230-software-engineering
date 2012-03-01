@@ -64,7 +64,51 @@ namespace ArrayFormat {
 
               page = new Text(wrap);
              ArrayMethods hi = new ArrayMethods();
-             hi.FillAdjust(sarray,wrap,page);
+             hi.Fill(sarray,wrap,page);
+             for (int i = 0; i < page.Lines.Count; i++)
+             {
+                 Console.WriteLine(page.Lines[i].ToString());
+             }
+             page = null;
+             page = new Text(wrap);
+             Console.WriteLine("Uniform");
+             hi.UniformCount(sarray, wrap, page, false);
+             for (int i = 0; i < page.Lines.Count; i++)
+             {
+                 Console.WriteLine(page.Lines[i].ToString());
+             }
+            page = null;
+             page = new Text(wrap);
+             Console.WriteLine("Uniform Strict");
+             hi.UniformCount(sarray, wrap, page, true);
+             for (int i = 0; i < page.Lines.Count; i++)
+             {
+                 Console.WriteLine(page.Lines[i].ToString());
+             }
+             page = null;
+             page = new Text(wrap);
+             Console.WriteLine("Column");
+             hi.Column(sarray, wrap, page, false);
+             for (int i = 0; i < page.Lines.Count; i++)
+             {
+                 Console.WriteLine(page.Lines[i].ToString());
+             }
+                           page = null;
+             page = new Text(wrap);
+             Console.WriteLine("Column Strict");
+             hi.Column(sarray, wrap, page, true);
+             for (int i = 0; i < page.Lines.Count; i++)
+             {
+                 Console.WriteLine(page.Lines[i].ToString());
+             }
+                                         page = null;
+             page = new Text(wrap);
+             Console.WriteLine("SET");
+             hi.Set(sarray, wrap, page);
+             for (int i = 0; i < page.Lines.Count; i++)
+             {
+                 Console.WriteLine(page.Lines[i].ToString());
+             }
               //Console.WriteLine(page.ToString());
               Console.ReadLine();
           break;
