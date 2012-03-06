@@ -61,11 +61,11 @@ namespace ArrayFormat {
       Page page = null;
       switch (format) {
         case ArrayFormat.Fill:
-
+              
               page = new Text(wrap);
              ArrayMethods hi = new ArrayMethods();
-             hi.Fill(sarray,wrap,page);
-             for (int i = 0; i < page.Lines.Count; i++)
+             //hi.Fill(sarray,wrap,page);
+             /*for (int i = 0; i < page.Lines.Count; i++)
              {
                  Console.WriteLine(page.Lines[i].ToString());
              }
@@ -111,7 +111,15 @@ namespace ArrayFormat {
              }
               //Console.WriteLine(page.ToString());
               Console.ReadLine();
-          break;
+              */
+             Console.WriteLine("SET");
+              hi.FillAdjust(sarray, wrap, page);
+              foreach (Line t in page.Lines)
+              {
+                  Console.WriteLine(t.ToString());
+              }
+              Console.ReadLine();
+              break;
         case ArrayFormat.UniformCount:
           break;
         case ArrayFormat.UniformCountStrict:

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Globalization;
 
 namespace ArrayFormat
 {
-    class ArrayMethods
+    internal class ArrayMethods
     {
         public void Fill(string[] inputstrings, int wrapcolumn, Page page)
         {
@@ -19,7 +20,9 @@ namespace ArrayFormat
                     linelength = inputstrings[offset].Length;
                 }
                 //check if the last one 
+
                 #region Last Element
+
                 if (j == (inputstrings.Length - 1) && startingaNewLine == false) //
                 {
                     var array = new string[stringCounter + 1];
@@ -42,6 +45,7 @@ namespace ArrayFormat
                 }
 
                 #endregion
+
                 if (inputstrings[(j + 1)].Length + linelength <= wrapcolumn) //if we can fit it on the same line
                 {
                     stringCounter++;
@@ -53,7 +57,7 @@ namespace ArrayFormat
                     var array = new string[stringCounter + 1];
                     for (int i = 0; i <= stringCounter; i++)
                     {
-                        array[i] = inputstrings[i + offset]; 
+                        array[i] = inputstrings[i + offset];
                     }
                     offset += stringCounter + 1; //Update Offset
                     page.Add(array);
@@ -79,7 +83,9 @@ namespace ArrayFormat
                     elementlimit = 1;
                 }
                 //check if the last one 
+
                 #region Last Element
+
                 if (j == (inputstrings.Length - 1) && startingaNewLine == false) //
                 {
                     var array = new string[stringCounter + 1];
@@ -102,7 +108,9 @@ namespace ArrayFormat
                 }
 
                 #endregion
-                if (inputstrings[(j + 1)].Length + linelength <= wrapcolumn && elementlimit < maxelements) //if we can fit it on the same line
+
+                if (inputstrings[(j + 1)].Length + linelength <= wrapcolumn && elementlimit < maxelements)
+                    //if we can fit it on the same line
                 {
                     stringCounter++;
                     elementlimit++;
@@ -190,7 +198,7 @@ namespace ArrayFormat
                     }
                 }
             }
-            }
+        }
 
         public void Set(string[] inputstrings, int wrapcolumn, Page page)
         {
@@ -199,7 +207,7 @@ namespace ArrayFormat
             var organisedStrings = new string[inputstrings.Length];
             int counter = 0;
             for (int i = 0; i < inputstrings.Length; i++)
-            { 
+            {
                 used[i] = false; //Initialise them all as true
             }
 
@@ -225,7 +233,7 @@ namespace ArrayFormat
                 }
             }
 
-            for(int i = 0 ; i < used.Length; i++) //Add Ones That Wouldn't Fit
+            for (int i = 0; i < used.Length; i++) //Add Ones That Wouldn't Fit
             {
                 if (used[i] == false)
                 {
@@ -263,21 +271,62 @@ namespace ArrayFormat
                 int spacestoadd = (wrapcolumn - t.Length());
                 if (spacestoadd < 0) //If there are no spaces to add
                     spacestoadd = 0;
-                int divide = t.Count() % 2;
-                bool divisable = Convert.ToBoolean(divide);
-                Console.WriteLine("Danny likes kids");
-                if(divisable)
-                    Console.WriteLine("hi");
-                //case divisable by 2
-                int equalspaces = (spacestoadd / 2);
-                for (int g = 0; g < page.Lines[0].Count(); g++) //For Each Gap
+                int divide = t.Count()%2;
+                bool divisable = Convert.ToBoolean(divide); //Spaces are Evenly Divisable
+                if (divisable)
                 {
-                    for (int h = 0; h < equalspaces; h++) //For each of the spaces to add
+                    #region Even Spaces
+                    //case divisable by 2
+                    bool evenspaces = spacestoadd%2 == 0;
+                    if (evenspaces)
                     {
-                        t.At(g, " "); //Add space
+                        int equalspaces = (spacestoadd/2);
+                        for (int g = 0; g < t.Count(); g++) //For Each Gap
+                        {
+                            for (int h = 0; h < equalspaces; h++) //For each of the spaces to add
+                            {
+                                t.At(g, " "); //Add space
+                            }
+                        }
                     }
+                    else
+                    {
+                        int remainder = spacestoadd % 2;
+                        int leftToAdd = (spacestoadd - remainder) / 2;
+                        for (int g = 0; g < t.Count(); g++) //For Each Gap
+                        {
+                            for (int h = 0; h < leftToAdd; h++) //For each of the spaces to add
+                            {
+                                t.At(g, " "); //Add space
+                            }
+                        }
+                        int gapdiff = -100; //set it very high to start
+                        int marker = 0; //this will tell us where it was
+                        int previous = 0; //will set the previous one
+                        //Now the Remaining One
+                        for (int g = 0; g < t.Count(); g++) //For Each Gap
+                        {
+                            if(previous + t.At(g).Length > gapdiff)
+                            {
+                                marker = g - 1;
+                                gapdiff = previous - t.At(g).Length;
+                                previous = t.At(g).Length;
+                            }
+                            Console.WriteLine(""+marker);
+                        }
+                        t.At(marker, " ");
+                        Console.ReadLine();
+                    }
+                    #endregion
+                }
+                else
+                {
+                    //get biggest elements and add space
                 }
             }
         }
+
+
+
     }
 }
