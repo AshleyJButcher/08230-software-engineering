@@ -5,16 +5,18 @@ using System.Text;
 
 namespace ArrayFormat {
   public abstract class Line {
+      public Page Page { get; set; }
 
       internal List<object> Text = new List<object>();
-      internal int WrapColumn = 0;
+      internal int WrapColumn;
 
-    internal Line(int wrap, Page page) {
-      if (wrap < 0) {
+      internal Line(int wrap, Page page) {
+          Page = page;
+          if (wrap < 0) {
         throw new ArgumentException("Wrap column cannot be negative: " + wrap);
       }
       WrapColumn = wrap;
-    }
+      }
 
     /// <summary>
     /// Number of strings on line.
@@ -47,25 +49,19 @@ namespace ArrayFormat {
     /// <param name="i"></param>
     /// <returns></returns>
     internal String At(int i){
-            List<object> StringList = new List<object>(); //Without Spaces
-            Space spaceobject = new Space();
-            foreach (object obj in Text)
-            {
-                if (obj.GetType() != spaceobject.GetType())
-                {
-                    StringList.Add(obj);
-                }
-            }
-            return StringList[i].ToString();
+        Space spaceobject = new Space();
+        var stringList = Text.Where(obj => obj.GetType() != spaceobject.GetType()).ToList(); //Without Spaces
+        return stringList[i].ToString();
         //return Text[i].ToString();
     }
 
-    /// <summary>
-    /// Set supplied string at supplied index
-    /// </summary>
-    /// <param name="i"></param>
-    /// <returns></returns>
-    internal void At(int i, String s) {
+      /// <summary>
+      /// Set supplied string at supplied index
+      /// </summary>
+      /// <param name="i"></param>
+      /// <param name="s"> </param>
+      /// <returns></returns>
+      internal void At(int i, String s) {
         Space newspaceobject = new Space();
         int counter = 0;
         int incrementer = 0;
@@ -107,20 +103,17 @@ namespace ArrayFormat {
     internal bool Add(String s) {
         try
         {
-            if (Overflow(s) == false)
-            {
-                TextString input = new TextString(s); //Create a Custom String Object with the string
-                Text.Add(input); //Add it to the Object Collection
-                Space space = new Space();
-                Text.Add(space);
-                return true;
-            }
-            else
+            if (Overflow(s))
             {
                 return false;
             }
+            TextString input = new TextString(s); //Create a Custom String Object with the string
+            Text.Add(input); //Add it to the Object Collection
+            Space space = new Space();
+            Text.Add(space);
+            return true;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return false; //If We Could Not Add It
         }

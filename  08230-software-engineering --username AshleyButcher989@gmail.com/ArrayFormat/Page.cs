@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.IO;
 
@@ -8,26 +7,26 @@ namespace ArrayFormat {
 
   public abstract class Page {
 
-    internal int wrap;
+    internal int Wrap;
     internal List<Line> Lines = new List<Line>();
 
     internal Page(int wrap) {
       if (wrap < 0) {
         throw new ArgumentException("Line count cannot be less than zero: " + wrap);
       }
-      this.wrap = wrap;
+      Wrap = wrap;
     }
 
-    /// <summary>
-    /// Add strings to this page maintaining the format
-    /// </summary>
-    /// <param name="s"></param>
-    internal void Add(String[] sarray) {
-        Line newline = new NewLine(wrap, this);
+      /// <summary>
+      /// Add strings to this page maintaining the format
+      /// </summary>
+      /// <param name="sarray"> </param>
+      internal void Add(String[] sarray) {
+        Line newline = new NewLine(Wrap, this);
         for (int i = 0; i < sarray.Length; i++)
         {
 
-            if (newline.Add(sarray[i].ToString()) == false)
+            if (newline.Add(sarray[i]) == false)
                 break;
         }
         Lines.Add(newline);
