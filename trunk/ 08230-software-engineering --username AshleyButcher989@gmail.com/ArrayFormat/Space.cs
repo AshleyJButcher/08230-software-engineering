@@ -12,7 +12,7 @@ namespace ArrayFormat {
 
       public override string ToString()
       {
-          return " ";
+          return "#";
       }
   }
 }

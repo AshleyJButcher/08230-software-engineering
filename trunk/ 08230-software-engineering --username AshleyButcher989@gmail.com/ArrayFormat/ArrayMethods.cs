@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace ArrayFormat
 {
@@ -17,7 +16,7 @@ namespace ArrayFormat
                 if (startingaNewLine)
                 {
                     stringCounter = 0;
-                    linelength = inputstrings[offset].Length;
+                    linelength = inputstrings[offset].Length + 1;
                 }
                 //check if the last one 
 
@@ -46,10 +45,10 @@ namespace ArrayFormat
 
                 #endregion
 
-                if (inputstrings[(j + 1)].Length + linelength <= wrapcolumn) //if we can fit it on the same line
+                if (inputstrings[(j + 1)].Length + (linelength + 1) <= wrapcolumn) //if we can fit it on the same line
                 {
                     stringCounter++;
-                    linelength += inputstrings[(j + 1)].Length;
+                    linelength += inputstrings[(j + 1)].Length + 1;
                     startingaNewLine = false;
                 }
                 else
@@ -66,7 +65,7 @@ namespace ArrayFormat
             }
         }
 
-        public void FillMod(string[] inputstrings, int wrapcolumn, Page page, int maxelements)
+        private void FillMod(string[] inputstrings, int wrapcolumn, Page page, int maxelements)
         {
             bool startingaNewLine = true;
             int stringCounter = 0;
@@ -79,7 +78,7 @@ namespace ArrayFormat
                 if (startingaNewLine)
                 {
                     stringCounter = 0;
-                    linelength = inputstrings[offset].Length;
+                    linelength = inputstrings[offset].Length + 1;
                     elementlimit = 1;
                 }
                 //check if the last one 
@@ -109,12 +108,12 @@ namespace ArrayFormat
 
                 #endregion
 
-                if (inputstrings[(j + 1)].Length + linelength <= wrapcolumn && elementlimit < maxelements)
+                if (inputstrings[(j + 1)].Length + (linelength + 1) <= wrapcolumn && elementlimit < maxelements)
                     //if we can fit it on the same line
                 {
                     stringCounter++;
                     elementlimit++;
-                    linelength += inputstrings[(j + 1)].Length;
+                    linelength += inputstrings[(j + 1)].Length + 1;
                     startingaNewLine = false;
                 }
                 else
@@ -244,11 +243,9 @@ namespace ArrayFormat
             Fill(organisedStrings, wrapcolumn, page);
         }
 
-        public void SortArray(string[] stringsort)
+        private void SortArray(string[] stringsort)
         {
-            int i;
-
-            for (i = (stringsort.Length - 1); i >= 0; i--)
+            for (int i = (stringsort.Length - 1); i >= 0; i--)
             {
                 int j;
                 for (j = 1; j <= i; j++)
@@ -312,17 +309,58 @@ namespace ArrayFormat
                                 gapdiff = previous - t.At(g).Length;
                                 previous = t.At(g).Length;
                             }
-                            Console.WriteLine(""+marker);
                         }
                         t.At(marker, " ");
-                        Console.ReadLine();
                     }
                     #endregion
                 }
                 else
                 {
+                    int loopreps = spacestoadd/t.Count();
+                    bool[] usedarray = new bool[t.Count()];
+                    //Add As Many even spaces as possible
+                    for (int g = 0; g < t.Count(); g++) //For Each Gap
+                    {
+                        for (int h = 0; h < loopreps; h++) //For each of the spaces to add
+                        {
+                            t.At(g, " "); //Add space
+                        }
+                    }
+
+                    int oddspacestoadd = spacestoadd - (loopreps*t.Count());
+
+                    Console.WriteLine(oddspacestoadd.ToString());
                     //get biggest elements and add space
+                    for (int f = 0; f < oddspacestoadd; f++) //Spaces to Add
+                    {
+                        int gapdiff = -100; //set it very high to start
+                        int marker = 0; //this will tell us where it was
+                        int previous = 0; //will set the previous one
+                        //Now the Remaining One
+
+                        for (int g = 0; g < t.Count(); g++) //For Each Gap
+                        {
+                            if (previous + t.At(g).Length > gapdiff && !usedarray[g])
+                            {
+                                marker = g - 1;
+                                gapdiff = previous + t.At(g).Length;
+                                previous = t.At(g).Length;
+                            }
+                        }
+
+                        for (int h = 0; h < t.Count(); h++)
+                        {
+                            if (!usedarray[h])
+                            {
+                                t.At(marker, " ");
+                                usedarray[marker] = true;
+                                break;
+                            }
+                        }
+                    }
                 }
+                //move end spaces to the start
+                t.Adjust();
             }
         }
 

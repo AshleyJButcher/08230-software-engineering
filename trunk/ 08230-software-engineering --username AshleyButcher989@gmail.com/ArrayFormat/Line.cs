@@ -4,94 +4,122 @@ using System.Linq;
 using System.Text;
 
 namespace ArrayFormat {
-  public abstract class Line {
-      public Page Page { get; set; }
+    public abstract class Line
+    {
+        public Page Page { get; set; }
 
-      internal List<object> Text = new List<object>();
-      internal int WrapColumn;
+        internal List<object> Text = new List<object>();
+        internal int WrapColumn;
 
-      internal Line(int wrap, Page page) {
-          Page = page;
-          if (wrap < 0) {
-        throw new ArgumentException("Wrap column cannot be negative: " + wrap);
-      }
-      WrapColumn = wrap;
-      }
-
-    /// <summary>
-    /// Number of strings on line.
-    /// </summary>
-    /// <returns></returns>
-    internal int Count() {
-        int templength = 0;
-        Space spaceobject = new Space();
-        foreach (object obj in Text)
+        internal Line(int wrap, Page page)
         {
-            if (obj.GetType() != spaceobject.GetType())
+            Page = page;
+            if (wrap < 0)
             {
-                templength++;
+                throw new ArgumentException("Wrap column cannot be negative: " + wrap);
             }
+            WrapColumn = wrap;
         }
-        return templength;
-    }
 
-    internal abstract int Length();
-
-    /// <summary>
-    /// True if line violates line condition.
-    /// </summary>
-    /// <returns></returns>
-    internal abstract bool Overflow(string add);
-
-    /// <summary>
-    /// String at supplied index
-    /// </summary>
-    /// <param name="i"></param>
-    /// <returns></returns>
-    internal String At(int i){
-        Space spaceobject = new Space();
-        var stringList = Text.Where(obj => obj.GetType() != spaceobject.GetType()).ToList(); //Without Spaces
-        return stringList[i].ToString();
-        //return Text[i].ToString();
-    }
-
-      /// <summary>
-      /// Set supplied string at supplied index
-      /// </summary>
-      /// <param name="i"></param>
-      /// <param name="s"> </param>
-      /// <returns></returns>
-      internal void At(int i, String s) {
-        Space newspaceobject = new Space();
-        int counter = 0;
-        int incrementer = 0;
-        while (true)
+        /// <summary>
+        /// Number of strings on line.
+        /// </summary>
+        /// <returns></returns>
+        internal int Count()
         {
-            while (Text[incrementer].GetType() == newspaceobject.GetType()) //Find Only the Strings
+            int templength = 0;
+            Space spaceobject = new Space();
+            foreach (object obj in Text)
             {
-                incrementer++; //If position is a space, increment til its a number
+                if (obj.GetType() != spaceobject.GetType())
+                {
+                    templength++;
+                }
             }
-            //We Will Get Here When We Have a String
-            if (i == counter)
+            return templength;
+        }
+
+        internal abstract int Length();
+
+        /// <summary>
+        /// True if line violates line condition.
+        /// </summary>
+        /// <returns></returns>
+        internal abstract bool Overflow(string add);
+
+        /// <summary>
+        /// String at supplied index
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        internal String At(int i)
+        {
+            Space spaceobject = new Space();
+            var stringList = Text.Where(obj => obj.GetType() != spaceobject.GetType()).ToList(); //Without Spaces
+            return stringList[i].ToString();
+            //return Text[i].ToString();
+        }
+
+        /// <summary>
+        /// Set supplied string at supplied index
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="s"> </param>
+        /// <returns></returns>
+        internal void At(int i, String s)
+        {
+            Space newspaceobject = new Space();
+            int counter = 0;
+            int incrementer = 0;
+            while (true)
             {
-                i = incrementer; //Location of the String
-                break;
+                while (Text[incrementer].GetType() == newspaceobject.GetType()) //Find Only the Strings
+                {
+                    incrementer++; //If position is a space, increment til its a number
+                }
+                //We Will Get Here When We Have a String
+                if (i == counter)
+                {
+                    i = incrementer; //Location of the String
+                    break;
+                }
+                counter++; //Next String
+                incrementer++; //Move Along One
             }
-            counter++; //Next String
-            incrementer++; //Move Along One
+            object currentobject;
+            if (s != " ")
+            {
+                currentobject = new TextString(s);
+            }
+            else
+            {
+                currentobject = new Space();
+
+            }
+            Text.Insert(i + 1, currentobject);
         }
-        object currentobject;
-        if (s != " ")
+
+        public void Adjust()
         {
-            currentobject = new TextString(s);
-        }
-        else
-        {
-           currentobject = new Space();
+            int index = 0, i = 0;
+            Space space = new Space();
+            while(index != Count())
+            {
+                if(Text[i].ToString() != space.ToString())
+                {
+                    index++;
+                }
+                i++;
+            }
+
+            for (int h = i; h < Text.Count; h++) //Moving spaces to the end
+            {
+                Text.RemoveAt(h);
+                Text.Insert(0,space);
+            }
 
         }
-        Text.Insert(i+1, currentobject);
-    }
+
 
     /// <summary>
     /// Add string to this line subject to overflow constraint.
