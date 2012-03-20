@@ -38,6 +38,10 @@ namespace ArrayFormat {
     /// <param name="text"></param>
     internal void IntoText(StringBuilder text)
     {
+        for(int i =0; i < Lines.Count; i++)
+        {
+            text.AppendLine(Lines[i].ToString());
+        }
     }
 
     internal void ToFile(String fileName) {

@@ -21,16 +21,18 @@ namespace ArrayFormat
         /// <returns></returns>
         internal override int Length()
         {
+            
             int templength = 0;
-            Space spaceobject = new Space();
+            //Space spaceobject = new Space();
             foreach (object obj in Text)
             {
-                if (obj.GetType() != spaceobject.GetType())
-                {
+                //if (obj.GetType() != spaceobject.GetType())
+                //{
                     templength += obj.ToString().Length;
-                }
+                //}
             }
             return templength;
+
         }
 
         internal override bool Overflow(string s)
