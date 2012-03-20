@@ -328,8 +328,6 @@ namespace ArrayFormat
                     }
 
                     int oddspacestoadd = spacestoadd - (loopreps*t.Count());
-
-                    Console.WriteLine(oddspacestoadd.ToString());
                     //get biggest elements and add space
                     for (int f = 0; f < oddspacestoadd; f++) //Spaces to Add
                     {
